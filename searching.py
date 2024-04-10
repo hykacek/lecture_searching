@@ -26,17 +26,27 @@ def linear_search(numbers, my_number):
     for index in range(len(numbers)):
         if numbers[index] == my_number:
             results["positions"].append(index)
-            results["count"] += 1
+            results["count"] = results["count"]+1
     print(results)
     return results
+
+
+def pattern_search(numbers, pattern):
+    indexes = set()
+    pattern_lenght = len(pattern)
+    for i in range(len(numbers)):
+        if numbers[i:i+ pattern_lenght] == pattern:
+            indexes.add(i)
+    print(indexes)
 
 
 
 
 def main():
-    numbers = read_data("sequential.json", "unordered_numbers")
+    numbers = read_data("sequential.json", "dna_sequence")
     print(numbers)
     linear_search(numbers, 0)
+    pattern_search(numbers, "TAA")
 
 
 if __name__ == '__main__':
