@@ -27,26 +27,38 @@ def linear_search(numbers, my_number):
         if numbers[index] == my_number:
             results["positions"].append(index)
             results["count"] = results["count"]+1
-    print(results)
     return results
 
 
-def pattern_search(numbers, pattern):
-    indexes = set()
-    pattern_lenght = len(pattern)
-    for i in range(len(numbers)):
-        if numbers[i:i+ pattern_lenght] == pattern:
-            indexes.add(i)
-    print(indexes)
-
+def pattern_search(sequence, pattern):
+    positions = set()
+    sequence_index = 0
+    n = len(pattern)
+    m = len(sequence)
+    while sequence_index < n - m:
+        pattern_index = 0
+        while pattern_index < m:
+            if sequence[sequence_index + pattern_index] != pattern[pattern_index]:
+                break
+            pattern_index = pattern_index + 1
+        if pattern_index == m:
+            positions.add(sequence_index + m // 2)
+        sequence_index = sequence_index + 1
+    return positions
 
 
 
 def main():
-    numbers = read_data("sequential.json", "dna_sequence")
-    print(numbers)
-    linear_search(numbers, 0)
-    pattern_search(numbers, "TAA")
+    numbers = read_data("sequential.json", "unordered_numbers")
+    my_number = 0
+    number_positions = linear_search(numbers, my_number)
+    print(number_positions)
+
+    sequence = read_data("sequential.json", "dna_sequence")
+    print(sequence)
+    pattern_positions = pattern_search(sequence, "ATA")
+    print(pattern_positions)
+
 
 
 if __name__ == '__main__':
